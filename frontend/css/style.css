@@ -1,0 +1,259 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f2f4f8;
+  color: #1f2937;
+}
+
+.header-top {
+  background-color: #1e293b;
+  padding: 15px 0;
+}
+
+.header-top-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #60a5fa;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-buttons a {
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.login-btn {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.signup-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.auth-buttons a:hover {
+  opacity: 0.8;
+}
+
+.header-bottom {
+  background-color: #334155;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.header-bottom-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.tagline {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: white;
+  opacity: 0.9;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  padding: 12px;
+  width: 60%;
+  max-width: 400px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.search-bar button {
+  padding: 12px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3b82f6;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.search-bar button:hover {
+  background-color: #2563eb;
+}
+
+.categories-nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.category-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.category-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.category-item.active {
+  background-color: #3b82f6;
+  color: white;
+}
+
+main {
+  padding: 25px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.jobs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.job-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.job-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.job-card h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: #1f2937;
+}
+
+.job-card .company {
+  color: #6b7280;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.job-card .location {
+  font-size: 14px;
+  color: #475569;
+  margin-bottom: 5px;
+}
+
+.job-card .salary {
+  font-size: 14px;
+  color: #059669;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.job-card .skills {
+  font-size: 14px;
+  color: #334155;
+  margin: 15px 0;
+}
+
+.skill-tag {
+  display: inline-block;
+  background-color: #f1f5f9;
+  color: #475569;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin: 2px;
+}
+
+.job-card .apply-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 16px;
+  background-color: #10b981;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.job-card .apply-btn:hover {
+  background-color: #059669;
+}
+
+footer {
+  background-color: #1f2937;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.footer-links {
+  margin-bottom: 20px;
+}
+
+.footer-links a {
+  color: #d1d5db;
+  text-decoration: none;
+  margin: 0 15px;
+}
+
+.footer-links a:hover {
+  color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+  .header-top-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .search-bar input {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .search-bar button {
+    margin-left: 0;
+  }
+
+  .auth-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .categories-nav {
+    gap: 10px;
+  }
+}
