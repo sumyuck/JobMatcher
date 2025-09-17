@@ -30,23 +30,20 @@ body {
   gap: 10px;
 }
 
-.auth-buttons a {
-  padding: 8px 16px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 14px;
-}
-
+/* Override Bootstrap button styles to keep our custom look */
 .login-btn {
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
+  background-color: transparent !important;
+  color: white !important;
+  border: 2px solid white !important;
+  padding: 8px 16px !important;
+  font-size: 14px !important;
 }
 
 .signup-btn {
-  background-color: #3b82f6;
-  color: white;
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  padding: 8px 16px !important;
+  font-size: 14px !important;
 }
 
 .auth-buttons a:hover {
@@ -78,8 +75,6 @@ body {
 
 .search-bar input {
   padding: 12px;
-  width: 60%;
-  max-width: 400px;
   border-radius: 5px;
   border: 1px solid #ddd;
   font-size: 16px;
@@ -87,7 +82,6 @@ body {
 
 .search-bar button {
   padding: 12px 20px;
-  margin-left: 10px;
   border: none;
   border-radius: 5px;
   background-color: #3b82f6;
@@ -129,16 +123,11 @@ body {
 
 main {
   padding: 25px 20px;
-  display: flex;
-  justify-content: center;
 }
 
 .jobs-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 25px;
-  width: 100%;
-  max-width: 1000px;
+  justify-content: center;
 }
 
 .job-card {
@@ -147,6 +136,9 @@ main {
   padding: 25px;
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  width: 100%;
+  max-width: 350px;
+  margin-bottom: 25px;
 }
 
 .job-card:hover {
@@ -216,17 +208,10 @@ footer {
   background-color: #1f2937;
   color: white;
   padding: 30px 20px;
-  text-align: center;
-}
-
-.footer-links {
-  margin-bottom: 20px;
 }
 
 .footer-links a {
   color: #d1d5db;
-  text-decoration: none;
-  margin: 0 15px;
 }
 
 .footer-links a:hover {

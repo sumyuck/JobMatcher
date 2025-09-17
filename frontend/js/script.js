@@ -1,31 +1,21 @@
-let jobs = [];
-
-// fetch("http://127.0.0.1:8000/api/jobs/")
-//   .then(res => res.json())
-//   .then(data => {
-//     renderJobs(data);
-// });
+let jobs = []
 
 fetch("http://127.0.0.1:8000/api/jobs/", { credentials: "include" })
-  .then(res => res.json())
-  .then(data => {
-    jobs = data.map(j => ({
+  .then((res) => res.json())
+  .then((data) => {
+    jobs = data.map((j) => ({
       ...j,
-      skills: Array.isArray(j.skills)
-        ? j.skills
-        : (j.skills ? j.skills.split(",").map(s => s.trim()) : []),
+      skills: Array.isArray(j.skills) ? j.skills : j.skills ? j.skills.split(",").map((s) => s.trim()) : [],
       salary: j.salary || "Not disclosed",
       category: j.category || "software",
-    }));
-    renderJobs(jobs);
-    renderCategories();
+    }))
+    renderJobs(jobs)
+    renderCategories()
   })
-  .catch(err => {
-    console.error("Error fetching jobs:", err);
-    document.getElementById("jobsContainer").innerHTML =
-      "<p style='text-align:center;'>Error loading jobs</p>";
-});
-
+  .catch((err) => {
+    console.error("Error fetching jobs:", err)
+    document.getElementById("jobsContainer").innerHTML = "<p class='text-center col-12'>Error loading jobs</p>"
+  })
 
 const categories = [
   { id: "all", name: "All Jobs" },
@@ -45,22 +35,28 @@ const searchBtn = document.getElementById("searchBtn")
 
 function renderJobs(jobsToRender) {
   if (jobsToRender.length === 0) {
-    jobsContainer.innerHTML = "<p style='text-align: center; grid-column: 1/-1;'>No jobs found</p>"
+    jobsContainer.innerHTML = "<p class='text-center col-12'>No jobs found</p>"
     return
   }
 
   jobsContainer.innerHTML = ""
   jobsToRender.forEach((job) => {
-    const skillTags = job.skills.map((skill) => `<span class="skill-tag">${skill}</span>`).join("")
+    const skillTags = job.skills
+      .map((skill) => `<span class="badge bg-light text-dark skill-tag">${skill}</span>`)
+      .join("")
 
     const jobCard = `
-      <div class="job-card">
-        <h2>${job.title}</h2>
-        <p class="company">${job.company}</p>
-        <p class="location">📍 ${job.location}</p>
-        <p class="salary">💰 ${job.salary}</p>
-        <div class="skills">Skills: ${skillTags}</div>
-        <a href="#" class="apply-btn">Apply Now</a>
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="job-card card h-100">
+          <div class="card-body">
+            <h2 class="card-title">${job.title}</h2>
+            <p class="company">${job.company}</p>
+            <p class="location">📍 ${job.location}</p>
+            <p class="salary">💰 ${job.salary}</p>
+            <div class="skills">Skills: ${skillTags}</div>
+            <a href="#" class="btn btn-success apply-btn">Apply Now</a>
+          </div>
+        </div>
       </div>
     `
     jobsContainer.insertAdjacentHTML("beforeend", jobCard)
