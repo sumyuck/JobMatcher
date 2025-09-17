@@ -1,14 +1,51 @@
 let jobs = []
 
+function inferCategory(title = "", skillsArr = []) {
+  const t = title.toLowerCase()
+  const s = skillsArr.map(x => String(x).toLowerCase())
+
+  const hasAny = (arr, keys) => arr.some(v => keys.some(k => v.includes(k)))
+
+  if (t.includes("frontend")) {
+    return "frontend"
+  }
+  if (t.includes("backend")) {
+    return "backend"
+  }
+  if (t.includes("data") || t.includes("applied")) {
+    return "data"
+  }
+  if (t.includes("android")) {
+    return "mobile"
+  }
+  if (t.includes("cloud") || t.includes("devops")) {
+    return "cloud"
+  }
+  return "software"
+}
+
 fetch("http://127.0.0.1:8000/api/jobs/", { credentials: "include" })
   .then((res) => res.json())
   .then((data) => {
-    jobs = data.map((j) => ({
-      ...j,
-      skills: Array.isArray(j.skills) ? j.skills : j.skills ? j.skills.split(",").map((s) => s.trim()) : [],
-      salary: j.salary || "Not disclosed",
-      category: j.category || "software",
-    }))
+    jobs = data.map((j) => {
+      const skillsArray = Array.isArray(j.skills)
+        ? j.skills
+        : j.skills
+          ? String(j.skills).split(",").map((s) => s.trim()).filter(Boolean)
+          : []
+
+      const category = j.category && j.category.trim()
+        ? j.category.trim().toLowerCase()
+        : inferCategory(j.title, skillsArray)
+
+      return {
+        ...j,
+        skills: skillsArray,
+        salary: j.salary || "Not disclosed",
+        category, // normalized/inferred
+      }
+    })
+
     renderJobs(jobs)
     renderCategories()
   })
@@ -34,14 +71,14 @@ const searchInput = document.getElementById("searchInput")
 const searchBtn = document.getElementById("searchBtn")
 
 function renderJobs(jobsToRender) {
-  if (jobsToRender.length === 0) {
+  if (!jobsToRender || jobsToRender.length === 0) {
     jobsContainer.innerHTML = "<p class='text-center col-12'>No jobs found</p>"
     return
   }
 
   jobsContainer.innerHTML = ""
   jobsToRender.forEach((job) => {
-    const skillTags = job.skills
+    const skillTags = (job.skills || [])
       .map((skill) => `<span class="badge bg-light text-dark skill-tag">${skill}</span>`)
       .join("")
 
@@ -49,12 +86,12 @@ function renderJobs(jobsToRender) {
       <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="job-card card h-100">
           <div class="card-body">
-            <h2 class="card-title">${job.title}</h2>
-            <p class="company">${job.company}</p>
-            <p class="location">📍 ${job.location}</p>
-            <p class="salary">💰 ${job.salary}</p>
+            <h2 class="card-title">${job.title ?? ""}</h2>
+            <p class="company">${job.company ?? ""}</p>
+            <p class="location">📍 ${job.location ?? ""}</p>
+            <p class="salary">💰 ${job.salary ?? "Not disclosed"}</p>
             <div class="skills">Skills: ${skillTags}</div>
-            <a href="#" class="btn btn-success apply-btn">Apply Now</a>
+            <a href="${job.link || '#'}" class="btn btn-success apply-btn" target="_blank" rel="noopener">Apply Now</a>
           </div>
         </div>
       </div>
@@ -79,19 +116,19 @@ function renderCategories() {
 }
 
 function filterJobs() {
-  const query = searchInput.value.toLowerCase()
-  let filtered = jobs
+  const query = (searchInput?.value || "").toLowerCase()
+  let filtered = [...jobs]
 
   if (selectedCategory !== "all") {
-    filtered = filtered.filter((job) => job.category === selectedCategory)
+    filtered = filtered.filter((job) => (job.category || "software").toLowerCase() === selectedCategory)
   }
 
   if (query) {
     filtered = filtered.filter(
       (job) =>
-        job.title.toLowerCase().includes(query) ||
-        job.company.toLowerCase().includes(query) ||
-        job.skills.some((skill) => skill.toLowerCase().includes(query)),
+        (job.title || "").toLowerCase().includes(query) ||
+        (job.company || "").toLowerCase().includes(query) ||
+        (job.skills || []).some((skill) => String(skill).toLowerCase().includes(query)),
     )
   }
 
@@ -107,7 +144,7 @@ function filterByCategory(category) {
 renderJobs(jobs)
 renderCategories()
 
-searchBtn.addEventListener("click", filterJobs)
-searchInput.addEventListener("keypress", (e) => {
+searchBtn?.addEventListener("click", filterJobs)
+searchInput?.addEventListener("keypress", (e) => {
   if (e.key === "Enter") filterJobs()
 })
